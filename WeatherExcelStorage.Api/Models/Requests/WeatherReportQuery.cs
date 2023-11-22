@@ -1,6 +1,13 @@
 namespace WeatherExcelStorage.Api.Models.Requests;
 
-public class WeatherReportQuery
+/// <summary>
+///     Запрос отчетов по погоде
+/// </summary>
+public sealed class WeatherReportQuery : PagedQuery, IDatetimeRange
 {
+    /// <inheritdoc />
+    public DateTime? From { get; set; }
     
+    /// <inheritdoc />
+    public DateTime? To { get; set; }
 }

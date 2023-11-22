@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherExcelStorage.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherExcelStorage.Api", "WeatherExcelStorage.Api\WeatherExcelStorage.Api.csproj", "{3B2B86AB-37FC-43BB-88B3-2006EAF4639E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherExcelStorage.UI", "WeatherExcelStorage.UI\WeatherExcelStorage.UI.csproj", "{A9EFF21C-615A-452B-83DD-CA681D5FEE70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{3B2B86AB-37FC-43BB-88B3-2006EAF4639E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B2B86AB-37FC-43BB-88B3-2006EAF4639E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B2B86AB-37FC-43BB-88B3-2006EAF4639E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9EFF21C-615A-452B-83DD-CA681D5FEE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9EFF21C-615A-452B-83DD-CA681D5FEE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9EFF21C-615A-452B-83DD-CA681D5FEE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9EFF21C-615A-452B-83DD-CA681D5FEE70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

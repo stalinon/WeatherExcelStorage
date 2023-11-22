@@ -1,37 +1,15 @@
 ﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:52792",
-      "sslPort": 44387
-    }
-  },
   "profiles": {
-    "http": {
+    "WeatherExcelStorage.Core": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:5120",
+      "hotReloadEnabled": true,
+      "hotReloadProfile": "aspnetcore",
+      "commandLineArgs": "watch run",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "https": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:7122;http://localhost:5120",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "CONNECTION_STRING": "Server=127.0.0.1;User Id=postgres;Port=5432;Database=weather;Password=postgres;Include Error Detail=true"
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "https://localhost:5006;http://localhost:5005"
     }
   }
 }

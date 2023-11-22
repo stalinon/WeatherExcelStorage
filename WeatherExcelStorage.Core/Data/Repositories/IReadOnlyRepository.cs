@@ -1,24 +1,23 @@
-using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Scraper.Common.Enums;
+using WeatherExcelStorage.Api.Enums;
 
-namespace Scraper.Common.Database;
+namespace WeatherExcelStorage.Core.Data.Repositories;
 
 /// <summary>
-/// Репозиторий только для чтения
+///     Репозиторий только для чтения
 /// </summary>
 public interface IReadOnlyRepository<T> where T : class
 {
     /// <summary>
-    /// Создать произвольный запрос на получение сущностей из БД
+    ///     Создать произвольный запрос на получение сущностей из БД
     /// </summary>
-    IQueryable<T> CreateQuery(Expression<Func<T, bool>>? filter = null);
+    IQueryable<T> CreateQuery(
+        Expression<Func<T, bool>>? filter = null,
+        Expression<Func<T, object>>? sort = null,
+        ColumnSortType sortDirection = ColumnSortType.Ascending);
 
     /// <summary>
-    /// Получить объекты согласно фильтру
+    ///     Получить объекты согласно фильтру
     /// </summary>
     Task<T[]> GetAllAsync(
         Expression<Func<T, bool>>? filter = null,
@@ -27,12 +26,12 @@ public interface IReadOnlyRepository<T> where T : class
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Получить объект согласно фильтру
+    ///     Получить объект согласно фильтру
     /// </summary>
     Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>>? filter = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Возвращает список неотслеживаемых сущностей
+    ///     Возвращает список неотслеживаемых сущностей
     /// </summary>
     IQueryable<T> NoTracking();
 }

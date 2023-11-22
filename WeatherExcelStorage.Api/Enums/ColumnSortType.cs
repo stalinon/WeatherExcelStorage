@@ -1,4 +1,4 @@
-namespace WeatherExcelStorage.Core.Data.Enums;
+namespace WeatherExcelStorage.Api.Enums;
 
 /// <summary>
 /// Тип сортировки столбца

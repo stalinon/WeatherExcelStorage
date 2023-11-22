@@ -1,6 +1,6 @@
-using WeatherExcelStorage.Core.Attributes;
+using WeatherExcelStorage.Api.Attributes;
 
-namespace WeatherExcelStorage.Core.Data.Enums;
+namespace WeatherExcelStorage.Api.Enums;
 
 /// <summary>
 ///     Направление ветра

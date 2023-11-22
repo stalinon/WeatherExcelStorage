@@ -1,4 +1,4 @@
-namespace WeatherExcelStorage.Core.Attributes;
+namespace WeatherExcelStorage.Api.Attributes;
 
 /// <summary>
 ///     Атрибут для выставления названия
