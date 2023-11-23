@@ -30,6 +30,7 @@ public sealed class Startup
     /// </summary>
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddControllersWithViews();
         services.AddMvc();
         services.AddControllers();
         services.AddSwaggerGen(c =>
@@ -56,23 +57,15 @@ public sealed class Startup
         IServiceProvider serviceProvider,
         IHostApplicationLifetime lifetime)
     {
+        app.UseStaticFiles();
         app.UseRouting();
-        
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers();
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            endpoints.MapRazorPages();
         });
-        
-        app.UseSwagger();
-        app.UseSwaggerUI(
-            c =>
-            {
-                c.RoutePrefix = "api";
-                c.ConfigObject.DisplayOperationId = true;
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"WeatherExcelStorage.Core API");
-                c.DocExpansion(DocExpansion.None);
-            }
-        );
     }
 
     private void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)

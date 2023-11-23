@@ -29,7 +29,7 @@ internal sealed class WeatherReportService : IWeatherReportService
     }
     
     /// <inheritdoc />
-    public async Task<PagedList<WeatherReport>> ListAsync(
+    public async Task<PagedList<WeatherReport, WeatherReportQuery>> ListAsync(
         WeatherReportQuery query, CancellationToken cancellationToken = default)
     {
         var queryable = CreateReportQuery(query);
@@ -40,10 +40,13 @@ internal sealed class WeatherReportService : IWeatherReportService
             .Take(query.Max)
             .ToArrayAsync(cancellationToken);
 
+        query.From ??= await queryable.MinAsync(e => e.DateTime, cancellationToken);
+        query.To ??= await queryable.MaxAsync(e => e.DateTime, cancellationToken);
         return new()
         {
             Items = items,
-            Total = total
+            Total = total,
+            Request = query
         };
 
         IQueryable<WeatherReportEntity> CreateReportQuery(WeatherReportQuery weatherReportQuery)
@@ -52,12 +55,14 @@ internal sealed class WeatherReportService : IWeatherReportService
 
             if (weatherReportQuery.From != null)
             {
-                reportQuery = reportQuery.Where(e => e.DateTime >= weatherReportQuery.From);
+                var from = DateTime.SpecifyKind(weatherReportQuery.From.Value, DateTimeKind.Utc);
+                reportQuery = reportQuery.Where(e => e.DateTime >= from);
             }
 
             if (weatherReportQuery.To != null)
             {
-                reportQuery = reportQuery.Where(e => e.DateTime <= weatherReportQuery.To);
+                var to = DateTime.SpecifyKind(weatherReportQuery.To.Value, DateTimeKind.Utc);
+                reportQuery = reportQuery.Where(e => e.DateTime <= to);
             }
 
             reportQuery = weatherReportQuery.SortType switch
@@ -74,13 +79,21 @@ internal sealed class WeatherReportService : IWeatherReportService
     public async Task UploadExcelReportAsync(
         byte[] bytes, CancellationToken cancellationToken = default)
     {
-        await using var stream = new MemoryStream(bytes);
-        var workbook = new XSSFWorkbook(stream);
+        try
+        {
+            await using var stream = new MemoryStream(bytes);
+            var workbook = new XSSFWorkbook(stream);
 
-        var reportList = ExtractWeatherReportsFromWorkBook(workbook);
+            var reportList = ExtractWeatherReportsFromWorkBook(workbook);
 
-        await _repository.AddRangeAsync(reportList.Select(MapToEntity), cancellationToken);
-        await _repository.SaveChangesAsync(cancellationToken);
+            await _repository.AddRangeAsync(reportList.Select(MapToEntity), cancellationToken);
+            await _repository.SaveChangesAsync(cancellationToken);
+        }
+        catch
+        {
+            throw new InvalidOperationException(
+                "Невозможно завершить сохранение файлов. Проверьте их валидность, либо убедитесь, что они не были загружены ранее.");
+        }
     }
 
     private static List<WeatherReportRow> ExtractWeatherReportsFromWorkBook(XSSFWorkbook workbook)

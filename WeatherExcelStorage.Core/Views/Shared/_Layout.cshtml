@@ -1,0 +1,21 @@
+
+@{
+    Layout = "_BaseLayout";
+}
+
+<section class='wrapper'>
+    <div class='hero'>
+    </div>
+    <div class='content'>
+        @RenderBody()
+    </div>
+</section>
+
+@section Css {
+    @await RenderSectionAsync("Css", false)
+}
+
+@section Scripts
+{
+    @await RenderSectionAsync("Scripts", false)
+}

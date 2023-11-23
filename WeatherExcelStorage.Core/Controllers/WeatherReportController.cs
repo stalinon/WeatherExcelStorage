@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using WeatherExcelStorage.Api.Models;
 using WeatherExcelStorage.Api.Models.Requests;
 using WeatherExcelStorage.Core.Domain.Services;
 
@@ -18,54 +17,59 @@ public sealed class WeatherReportController : Controller
         _reportService = reportService;
     }
     
-    #region GET api/reports
-
     /// <summary>
-    ///     Получить список
+    ///     Главная страница
     /// </summary>
-    [
-        HttpGet("~/api/reports"),
-        ProducesResponseType(typeof(PagedList<WeatherReport>), 200)
-    ]
-    public async Task<IActionResult> List(
-        [FromQuery] WeatherReportQuery query,
-        CancellationToken cancellationToken)
+    [Route("/")]
+    public IActionResult Index()
     {
-        var reports = await _reportService.ListAsync(query, cancellationToken);
-
-        return Ok(reports);
+        return View();
     }
-
-    #endregion
     
-    #region POST api/reports
-
     /// <summary>
-    ///     Загрузить файл Excel
+    ///     Просмотр архивов
     /// </summary>
-    [
-        HttpPost("~/api/reports"),
-        ProducesResponseType(200),
-        ProducesResponseType(400)
-    ]
-    public async Task<IActionResult> Upload(
-        IFormFile file,
-        CancellationToken cancellationToken)
+    [Route("/reports")]
+    public async Task<IActionResult> ListView(WeatherReportQuery query)
     {
-        if (file.Length <= 0)
-        {
-            return BadRequest();
-        }
-        
-        using var ms = new MemoryStream();
-        await file.CopyToAsync(ms, cancellationToken);
-        
-        var fileBytes = ms.ToArray();
-        await _reportService.UploadExcelReportAsync(fileBytes, cancellationToken);
-
-        return Ok();
-
+        var reports = await _reportService.ListAsync(query);
+        return View("ListView", reports);
     }
+    
+    /// <summary>
+    ///     Загрузка архивов
+    /// </summary>
+    [HttpPost]
+    [Route("/upload")]
+    public async Task<IActionResult> UploadFiles(List<IFormFile> files)
+    {
+        foreach (var file in files)
+        {
+            using var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+        
+            var fileBytes = ms.ToArray();
 
-    #endregion
+            try
+            {
+                await _reportService.UploadExcelReportAsync(fileBytes);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return View("UploadFile", ex.Message);
+            }
+        }
+
+        return View("UploadFile");
+    }
+    
+    /// <summary>
+    ///     Загрузка архивов
+    /// </summary>
+    [HttpGet]
+    [Route("/upload")]
+    public IActionResult Upload()
+    {
+        return View("UploadFile");
+    }
 }

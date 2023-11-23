@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace WeatherExcelStorage.Api.Models.Requests;
 
 /// <summary>
@@ -6,8 +8,10 @@ namespace WeatherExcelStorage.Api.Models.Requests;
 public sealed class WeatherReportQuery : PagedQuery, IDatetimeRange
 {
     /// <inheritdoc />
+    [FromQuery(Name = "from")]
     public DateTime? From { get; set; }
     
     /// <inheritdoc />
+    [FromQuery(Name = "to")]
     public DateTime? To { get; set; }
 }

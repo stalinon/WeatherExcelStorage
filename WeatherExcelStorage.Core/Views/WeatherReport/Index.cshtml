@@ -1,0 +1,15 @@
+@{
+    ViewBag.Title = "Weather";
+    Layout = "_Layout";
+}
+
+<h1 class='h1--scalingSize'>Погодные отчеты</h1>
+<div class="frame">
+    <a class="custom-btn btn" href="@Url.Action("ListView")"><span>Просмотр архивов</span></a>
+    <a class="custom-btn btn" href="@Url.Action("Upload")"><span>Загрузка архивов</span></a>
+</div>
+
+
+@section Css {
+    <link href="/styles/index.css" rel="stylesheet" type="text/css" />
+}

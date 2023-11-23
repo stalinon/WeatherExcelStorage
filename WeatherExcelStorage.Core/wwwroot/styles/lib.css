@@ -1,0 +1,868 @@
+@property --blink-opacity {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 1;
+}
+
+@keyframes blink-animation {
+    0%,
+    100% {
+        opacity: var(--blink-opacity, 1);
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+:root {
+    font-family: Inter, sans-serif;
+
+    --stripe-color: #fff;
+    --bg: var(--stripe-color);
+    --maincolor: var(--bg);
+}
+
+body {
+    width: 100cqw;
+    min-height: 100cqh;
+    display: flex;
+    place-content: center;
+    place-items: flex-start center;
+    background: var(--bg);
+}
+
+@keyframes smoothBg {
+    from {
+        background-position: 50% 50%, 50% 50%;
+    }
+    to {
+        background-position: 350% 50%, 350% 50%;
+    }
+}
+
+.wrapper {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.hero {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    --stripes: repeating-linear-gradient(
+            100deg,
+            var(--stripe-color) 0%,
+            var(--stripe-color) 7%,
+            transparent 10%,
+            transparent 12%,
+            var(--stripe-color) 16%
+    );
+
+    --rainbow: repeating-linear-gradient(
+            100deg,
+            #60a5fa 10%,
+            #e879f9 15%,
+            #60a5fa 20%,
+            #5eead4 25%,
+            #60a5fa 30%
+    );
+    background-image: var(--stripes), var(--rainbow);
+    background-size: 300%, 200%;
+    background-position: 50% 50%, 50% 50%;
+
+    filter: blur(10px) invert(100%);
+
+    mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--stripes), var(--rainbow);
+        background-size: 200%, 100%;
+        animation: smoothBg 60s linear infinite;
+        background-attachment: fixed;
+        mix-blend-mode: difference;
+    }
+}
+
+.content {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    flex-flow: column;
+    gap: 4.5%;
+    text-align: center;
+    mix-blend-mode: difference;
+    -webbkit-mix-blend-mode: difference;
+    filter: invert(1);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: aliceblue;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.page {
+    width: 300px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.page li {
+    list-style: none;
+    margin: 10px auto;
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pages {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+    width: 200px;
+}
+
+.page-number {
+    cursor: pointer;
+    background-color: white;
+    color: #999;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .4s ease;
+}
+
+.active {
+    font-size: 1.3em;
+    height: 40px;
+    width: 40px;
+    background-color: #0057b3;
+    color: white;
+}
+
+.button {
+    width: 120px;
+    padding: 8px 16px;
+    background-color: #ffffff00;
+    color: #0057b3;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button:hover {
+    color: #0056b3;
+}
+
+.button:disabled {
+    background-color: #ffffff00;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+#prevPage {
+    margin-right: 20px;
+}
+
+#nextPage {
+    margin-left: 20px;
+}
+
+.arrow {
+    font-size: 1.2em;
+}
+
+.nav-text {
+    font-size: 0.7em;
+    letter-spacing: 0.3em;
+}
+
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    background-color: white;
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            .transition(all .3s ease);
+            > th,
+            > td {
+                text-align: left;
+                padding: 1.6rem;
+                vertical-align: top;
+                border-top: 0;
+                .transition(all .3s ease);
+            }
+        }
+    }
+    > thead > tr > th {
+        font-weight: 400;
+        color: #757575;
+        vertical-align: bottom;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+    }
+    > caption + thead,
+    > colgroup + thead,
+    > thead:first-child {
+        > tr:first-child {
+            > th,
+            > td {
+                border-top: 0;
+            }
+        }
+    }
+    > tbody + tbody {
+        border-top: 1px solid rgba(0,0,0,.12);
+    }
+
+.table {
+    background-color: white;
+}
+
+.no-border {
+    border: 0;
+}
+}
+
+                      .table-condensed {
+                          > thead,
+                          > tbody,
+                          > tfoot {
+                              > tr {
+                                  > th,
+                                  > td {
+                                      padding: 1.6rem/2;
+                                  }
+                              }
+                          }
+                      }
+                      
+   .table-bordered {
+       border: 0;
+       > thead,
+       > tbody,
+       > tfoot {
+           > tr {
+               > th,
+               > td {
+                   border: 0;
+                   border-bottom: 1px solid #e0e0e0;
+               }
+           }
+       }
+       > thead > tr {
+           > th,
+           > td {
+               border-bottom-width: 2px;
+           }
+       }
+   }
+   
+.table-striped {
+    > tbody > tr:nth-child(odd) {
+        > td,
+        > th {
+            background-color: #f5f5f5;
+        }
+    }
+}
+
+.table-hover {
+    > tbody > tr:hover {
+        > td,
+        > th {
+            background-color: rgba(0,0,0,.12);
+        }
+    }
+}
+
+.table-responsive-vertical {
+
+    @media screen and (max-width: 768px) {
+
+    // Tighten up spacing
+    > .table {
+        margin-bottom: 0;
+        background-color: transparent;
+        > thead,
+        > tfoot {
+            display: none;
+        }
+
+        > tbody {
+            display: block;
+
+            > tr {
+                display: block;
+                border: 1px solid #e0e0e0;
+                border-radius: 2px;
+                margin-bottom: 1.6rem;
+
+                > td {
+                    background-color: white;
+                    display: block;
+                    vertical-align: middle;
+                    text-align: right;
+                }
+                > td[data-title]:before {
+                    content: attr(data-title);
+                    float: left;
+                    font-size: inherit;
+                    font-weight: 400;
+                    color: #757575;
+                }
+            }
+        }
+    }
+
+    // Special overrides for shadows
+    &.shadow-z-1 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        > .table > tbody > tr {
+            border: none;
+            .shadow-z-1();
+        }
+    }
+
+    // Special overrides for the bordered tables
+    > .table-bordered {
+        border: 0;
+
+    // Nuke the appropriate borders so that the parent can handle them
+    > tbody {
+        > tr {
+            > td {
+                border: 0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            > td:last-child {
+                border-bottom: 0;
+            }
+        }
+    }
+    }
+
+    // Special overrides for the striped tables
+    > .table-striped {
+        > tbody > tr > td,
+        > tbody > tr:nth-child(odd) {
+            background-color: white;
+        }
+        > tbody > tr > td:nth-child(odd) {
+            background-color: #f5f5f5;
+        }
+    }
+
+    // Special overrides for hover tables
+    > .table-hover {
+        > tbody {
+            > tr:hover > td,
+            > tr:hover {
+                background-color: white;
+            }
+            > tr > td:hover {
+                background-color: rgba(0,0,0,.12);
+            }
+        }
+    }
+    }
+}
+
+.table-striped.table-mc-red > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-red > tbody > tr:nth-child(odd) > th {
+   background-color: #fde0dc;
+}
+.table-hover.table-mc-red > tbody > tr:hover > td,
+.table-hover.table-mc-red > tbody > tr:hover > th {
+    background-color: #f9bdbb;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-red > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-red > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-red > tbody > tr > td:nth-child(odd) {
+        background-color: #fde0dc;
+    }
+    .table-responsive-vertical .table-hover.table-mc-red > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-red > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-red > tbody > tr > td:hover {
+        background-color: #f9bdbb;
+    }
+}
+.table-striped.table-mc-pink > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-pink > tbody > tr:nth-child(odd) > th {
+    background-color: #fce4ec;
+}
+.table-hover.table-mc-pink > tbody > tr:hover > td,
+.table-hover.table-mc-pink > tbody > tr:hover > th {
+    background-color: #f8bbd0;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-pink > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-pink > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-pink > tbody > tr > td:nth-child(odd) {
+        background-color: #fce4ec;
+    }
+    .table-responsive-vertical .table-hover.table-mc-pink > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-pink > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-pink > tbody > tr > td:hover {
+        background-color: #f8bbd0;
+    }
+}
+.table-striped.table-mc-purple > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-purple > tbody > tr:nth-child(odd) > th {
+    background-color: #f3e5f5;
+}
+.table-hover.table-mc-purple > tbody > tr:hover > td,
+.table-hover.table-mc-purple > tbody > tr:hover > th {
+    background-color: #e1bee7;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-purple > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-purple > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-purple > tbody > tr > td:nth-child(odd) {
+        background-color: #f3e5f5;
+    }
+    .table-responsive-vertical .table-hover.table-mc-purple > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-purple > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-purple > tbody > tr > td:hover {
+        background-color: #e1bee7;
+    }
+}
+.table-striped.table-mc-deep-purple > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-deep-purple > tbody > tr:nth-child(odd) > th {
+    background-color: #ede7f6;
+}
+.table-hover.table-mc-deep-purple > tbody > tr:hover > td,
+.table-hover.table-mc-deep-purple > tbody > tr:hover > th {
+    background-color: #d1c4e9;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-deep-purple > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-deep-purple > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-deep-purple > tbody > tr > td:nth-child(odd) {
+        background-color: #ede7f6;
+    }
+    .table-responsive-vertical .table-hover.table-mc-deep-purple > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-deep-purple > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-deep-purple > tbody > tr > td:hover {
+        background-color: #d1c4e9;
+    }
+}
+.table-striped.table-mc-indigo > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-indigo > tbody > tr:nth-child(odd) > th {
+    background-color: #e8eaf6;
+}
+.table-hover.table-mc-indigo > tbody > tr:hover > td,
+.table-hover.table-mc-indigo > tbody > tr:hover > th {
+    background-color: #c5cae9;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-indigo > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-indigo > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-indigo > tbody > tr > td:nth-child(odd) {
+        background-color: #e8eaf6;
+    }
+    .table-responsive-vertical .table-hover.table-mc-indigo > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-indigo > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-indigo > tbody > tr > td:hover {
+        background-color: #c5cae9;
+    }
+}
+.table-striped.table-mc-blue > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-blue > tbody > tr:nth-child(odd) > th {
+    background-color: #e7e9fd;
+}
+.table-hover.table-mc-blue > tbody > tr:hover > td,
+.table-hover.table-mc-blue > tbody > tr:hover > th {
+    background-color: #d0d9ff;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-blue > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-blue > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-blue > tbody > tr > td:nth-child(odd) {
+        background-color: #e7e9fd;
+    }
+    .table-responsive-vertical .table-hover.table-mc-blue > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-blue > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-blue > tbody > tr > td:hover {
+        background-color: #d0d9ff;
+    }
+}
+.table-striped.table-mc-light-blue > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-light-blue > tbody > tr:nth-child(odd) > th {
+    background-color: #e1f5fe;
+}
+.table-hover.table-mc-light-blue > tbody > tr:hover > td,
+.table-hover.table-mc-light-blue > tbody > tr:hover > th {
+    background-color: #b3e5fc;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-light-blue > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-light-blue > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-light-blue > tbody > tr > td:nth-child(odd) {
+        background-color: #e1f5fe;
+    }
+    .table-responsive-vertical .table-hover.table-mc-light-blue > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-light-blue > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-light-blue > tbody > tr > td:hover {
+        background-color: #b3e5fc;
+    }
+}
+.table-striped.table-mc-cyan > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-cyan > tbody > tr:nth-child(odd) > th {
+    background-color: #e0f7fa;
+}
+.table-hover.table-mc-cyan > tbody > tr:hover > td,
+.table-hover.table-mc-cyan > tbody > tr:hover > th {
+    background-color: #b2ebf2;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-cyan > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-cyan > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-cyan > tbody > tr > td:nth-child(odd) {
+        background-color: #e0f7fa;
+    }
+    .table-responsive-vertical .table-hover.table-mc-cyan > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-cyan > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-cyan > tbody > tr > td:hover {
+        background-color: #b2ebf2;
+    }
+}
+.table-striped.table-mc-teal > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-teal > tbody > tr:nth-child(odd) > th {
+    background-color: #e0f2f1;
+}
+.table-hover.table-mc-teal > tbody > tr:hover > td,
+.table-hover.table-mc-teal > tbody > tr:hover > th {
+    background-color: #b2dfdb;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-teal > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-teal > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-teal > tbody > tr > td:nth-child(odd) {
+        background-color: #e0f2f1;
+    }
+    .table-responsive-vertical .table-hover.table-mc-teal > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-teal > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-teal > tbody > tr > td:hover {
+        background-color: #b2dfdb;
+    }
+}
+.table-striped.table-mc-green > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-green > tbody > tr:nth-child(odd) > th {
+    background-color: #d0f8ce;
+}
+.table-hover.table-mc-green > tbody > tr:hover > td,
+.table-hover.table-mc-green > tbody > tr:hover > th {
+    background-color: #a3e9a4;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-green > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-green > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-green > tbody > tr > td:nth-child(odd) {
+        background-color: #d0f8ce;
+    }
+    .table-responsive-vertical .table-hover.table-mc-green > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-green > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-green > tbody > tr > td:hover {
+        background-color: #a3e9a4;
+    }
+}
+.table-striped.table-mc-light-green > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-light-green > tbody > tr:nth-child(odd) > th {
+    background-color: #f1f8e9;
+}
+.table-hover.table-mc-light-green > tbody > tr:hover > td,
+.table-hover.table-mc-light-green > tbody > tr:hover > th {
+    background-color: #dcedc8;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-light-green > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-light-green > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-light-green > tbody > tr > td:nth-child(odd) {
+        background-color: #f1f8e9;
+    }
+    .table-responsive-vertical .table-hover.table-mc-light-green > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-light-green > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-light-green > tbody > tr > td:hover {
+        background-color: #dcedc8;
+    }
+}
+.table-striped.table-mc-lime > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-lime > tbody > tr:nth-child(odd) > th {
+    background-color: #f9fbe7;
+}
+.table-hover.table-mc-lime > tbody > tr:hover > td,
+.table-hover.table-mc-lime > tbody > tr:hover > th {
+    background-color: #f0f4c3;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-lime > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-lime > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-lime > tbody > tr > td:nth-child(odd) {
+        background-color: #f9fbe7;
+    }
+    .table-responsive-vertical .table-hover.table-mc-lime > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-lime > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-lime > tbody > tr > td:hover {
+        background-color: #f0f4c3;
+    }
+}
+.table-striped.table-mc-yellow > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-yellow > tbody > tr:nth-child(odd) > th {
+    background-color: #fffde7;
+}
+.table-hover.table-mc-yellow > tbody > tr:hover > td,
+.table-hover.table-mc-yellow > tbody > tr:hover > th {
+    background-color: #fff9c4;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-yellow > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-yellow > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-yellow > tbody > tr > td:nth-child(odd) {
+        background-color: #fffde7;
+    }
+    .table-responsive-vertical .table-hover.table-mc-yellow > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-yellow > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-yellow > tbody > tr > td:hover {
+        background-color: #fff9c4;
+    }
+}
+.table-striped.table-mc-amber > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-amber > tbody > tr:nth-child(odd) > th {
+    background-color: #fff8e1;
+}
+.table-hover.table-mc-amber > tbody > tr:hover > td,
+.table-hover.table-mc-amber > tbody > tr:hover > th {
+    background-color: #ffecb3;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-amber > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-amber > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-amber > tbody > tr > td:nth-child(odd) {
+        background-color: #fff8e1;
+    }
+    .table-responsive-vertical .table-hover.table-mc-amber > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-amber > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-amber > tbody > tr > td:hover {
+        background-color: #ffecb3;
+    }
+}
+.table-striped.table-mc-orange > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-orange > tbody > tr:nth-child(odd) > th {
+    background-color: #fff3e0;
+}
+.table-hover.table-mc-orange > tbody > tr:hover > td,
+.table-hover.table-mc-orange > tbody > tr:hover > th {
+    background-color: #ffe0b2;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-orange > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-orange > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-orange > tbody > tr > td:nth-child(odd) {
+        background-color: #fff3e0;
+    }
+    .table-responsive-vertical .table-hover.table-mc-orange > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-orange > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-orange > tbody > tr > td:hover {
+        background-color: #ffe0b2;
+    }
+}
+.table-striped.table-mc-deep-orange > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-deep-orange > tbody > tr:nth-child(odd) > th {
+    background-color: #fbe9e7;
+}
+.table-hover.table-mc-deep-orange > tbody > tr:hover > td,
+.table-hover.table-mc-deep-orange > tbody > tr:hover > th {
+    background-color: #ffccbc;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-deep-orange > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-deep-orange > tbody > tr:nth-child(odd) {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-striped.table-mc-deep-orange > tbody > tr > td:nth-child(odd) {
+        background-color: #fbe9e7;
+    }
+    .table-responsive-vertical .table-hover.table-mc-deep-orange > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-deep-orange > tbody > tr:hover {
+        background-color: white;
+    }
+    .table-responsive-vertical .table-hover.table-mc-deep-orange > tbody > tr > td:hover {
+        background-color: #ffccbc;
+    }
+}
+
+.file {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file > input[type='file'] {
+    display: none
+}
+
+.file > label {
+    font-size: 1rem;
+    font-weight: 300;
+    cursor: pointer;
+    outline: 0;
+    user-select: none;
+    border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
+    border-style: solid;
+    border-radius: 4px;
+    border-width: 1px;
+    background-color: hsl(0, 0%, 100%);
+    color: hsl(0, 0%, 29%);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file > label:hover {
+    border-color: hsl(0, 0%, 21%);
+}
+
+.file > label:active {
+    background-color: hsl(0, 0%, 96%);
+}
+
+.file > label > i {
+    padding-right: 5px;
+}
+
+.file--upload > label {
+    color: hsl(204, 86%, 53%);
+    border-color: hsl(204, 86%, 53%);
+}
+
+.file--upload > label:hover {
+    border-color: hsl(204, 86%, 53%);
+    background-color: hsl(204, 86%, 96%);
+}
+
+.file--upload > label:active {
+    background-color: hsl(204, 86%, 91%);
+}
+
+@keyframes pulse {
+    0% {
+        color: hsl(48, 100%, 67%);
+    }
+    50% {
+        color: hsl(48, 100%, 38%);
+    }
+    100% {
+        color: hsl(48, 100%, 67%);
+    }
+}

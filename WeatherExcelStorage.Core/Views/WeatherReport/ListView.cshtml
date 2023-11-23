@@ -1,0 +1,97 @@
+@using Microsoft.OpenApi.Extensions
+@using WeatherExcelStorage.Api.Attributes
+@model WeatherExcelStorage.Api.Models.PagedList<WeatherExcelStorage.Api.Models.WeatherReport, WeatherExcelStorage.Api.Models.Requests.WeatherReportQuery>
+
+@{
+    ViewBag.Title = "Просмотр";
+    Layout = "_BaseLayout";
+    var pages = Model.Total / Model.Request.Max + 1;
+    var current = Model.Request.Skip / Model.Request.Max;
+    var start = current - 1;
+    if (start <= 0)
+    {
+        start = 1;
+    }
+
+    var end = start + 5;
+    if (end >= pages)
+    {
+        end = pages;
+    }
+}
+
+<div class="table-container" style="margin: 20px auto; margin-top: @(60 * Model.Items.Length / 20)%;">
+    <input type="text" name="daterange" value="@Model.Request.From?.ToString("MM/dd/yyyy") - @Model.Request.To?.ToString("MM/dd/yyyy")" />
+    <table id="table" class="table table-hover table-mc-light-blue">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Дата</th>
+            <th>Температура воздуха</th>
+            <th>Облачность</th>
+            <th>Точка росы</th>
+            <th>Атмосферное давление</th>
+            <th>Направление ветра</th>
+            <th>Скорость ветра</th>
+            <th>Облачность</th>
+            <th>Нижняя граница облачности</th>
+            <th>Горизонтальная видимость</th>
+            <th>Погодные условия</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var report in Model.Items)
+        {
+            <tr>
+                <td>@report.Id</td>
+                <td>@report.DateTime.ToString("yyyy-MM-dd HH-mm")</td>
+                <td>@report.AirTemperature</td>
+                <td>@report.Humidity</td>
+                <td>@report.DewPoint</td>
+                <td>@report.AirPressure</td>
+                <td>@string.Join(", ", report.WindDirection.Select(d => d.GetAttributeOfType<NameAttribute>().Name))</td>
+                <td>@report.WindSpeed</td>
+                <td>@report.Overcast</td>
+                <td>@report.LowOvercastPoint</td>
+                <td>@report.HorizontalSight</td>
+                <td>@report.WeatherConditions</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="pagination">
+        @if (current > 0)
+        {
+            <a href="@Url.Action("ListView", new {max = Model.Request.Max, skip = (current - 1) * Model.Request.Max, from = Model.Request.From, to = Model.Request.To})" class="arrow button" id="prevPage">← <span class="nav-text">PREV</span></a>
+        }
+        <div class="pages">
+            @for (var i = start; i < end && i > 0; i++)
+            {
+                <a href="@Url.Action("ListView", new {max = Model.Request.Max, skip = (i - 1) * Model.Request.Max, from = Model.Request.From, to = Model.Request.To})" class="page-number @(current == i - 1 ? "active" : "")">@i</a>
+            }
+        </div>
+        @if (current == pages)
+        {
+            <a href="@Url.Action("ListView", new {max = Model.Request.Max, skip = (current + 1) * Model.Request.Max, from = Model.Request.From, to = Model.Request.To})" class="arrow button" id="nextPage"><span class="nav-text">NEXT</span> →</a>
+        }
+    </div>
+</div>
+
+@section Css {
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+}
+
+@section Scripts
+{
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    window.location.href = `@Url.Action("ListView")?from=${start.format('YYYY-MM-DD')}&to=${end.format('YYYY-MM-DD')}&max=@Model.Request.Max&skip=@Model.Request.Skip`;
+  });
+});
+</script>
+}

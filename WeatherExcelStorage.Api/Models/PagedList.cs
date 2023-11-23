@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
+using WeatherExcelStorage.Api.Models.Requests;
 
 namespace WeatherExcelStorage.Api.Models;
 
 /// <summary>
 ///     Пагинированный список
 /// </summary>
-public sealed class PagedList<TModel>
+public sealed class PagedList<TModel, TPagedRequest>
     where TModel : class
+    where TPagedRequest : PagedQuery
 {
     /// <summary>
     ///     Элементы
@@ -19,4 +21,10 @@ public sealed class PagedList<TModel>
     /// </summary>
     [JsonPropertyName("total")]
     public int Total { get; set; }
+
+    /// <summary>
+    ///     Запрос
+    /// </summary>
+    [JsonPropertyName("request")]
+    public TPagedRequest Request { get; set; }
 }

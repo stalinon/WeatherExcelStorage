@@ -11,7 +11,7 @@ public interface IWeatherReportService
     /// <summary>
     ///     Получить список отчетов по погоде
     /// </summary>
-    Task<PagedList<WeatherReport>> ListAsync(
+    Task<PagedList<WeatherReport, WeatherReportQuery>> ListAsync(
         WeatherReportQuery query, CancellationToken cancellationToken = default);
 
     /// <summary>
