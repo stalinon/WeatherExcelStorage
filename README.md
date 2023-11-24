@@ -1,5 +1,11 @@
 # WeatherExcelStorage
+Перед запуском проекта
+```cli
+ docker run postgres -d weather -n weather -p postgres
+```
+затем накатить миграции
 
+Главная
 ![image](https://github.com/stalinon/WeatherExcelStorage/assets/53484787/b8d84a39-a289-4fb5-88a3-8b7172892a2e)
 
 Просмотр архива
